@@ -78,6 +78,20 @@ public static void main(String[] args) {
 	System.out.println("Ejercicio c.ii:");
 	
 	DAOUsuario.getActividadDeUsuario(1, fechaA1, manager);
+	
+	System.out.println("Ejercicio c.iii:");
+	
+	DAOUsuario.getActividadDeUsuarioRango(u1.getId(), fechaA1,fechaA1, manager);
+	
+	System.out.println("Ejercicio c.iv:");
+	
+	DAOActividad.getReunionesSuperpuestasu1.getId(u1.getId(), a1, manager);
+	
+	
+	Date dateOverlapS = new GregorianCalendar(2017, Calendar.SEPTEMBER, 19, 00, 00).getTime();
+	Date dateOverlapE = new GregorianCalendar(2017, Calendar.SEPTEMBER, 20, 00, 00).getTime();
+	DAOMeeting.createMeeting("Overlap",dateOverlapS,dateOverlapE, 1, 4, 3, em);
+	DAOMeeting.getOverlapMeetings(3, 40, em);
 
 //	String jpql = "SELECT u FROM Usuario u"; 
 //    Query query = manager.createQuery(jpql); 

@@ -77,8 +77,20 @@ private static DAOUsuario daousuario;
 	}
 	
 	
+	public static void getActividadDeUsuarioRango(int idUsuario,Date dia1,Date dia2, EntityManager em) {
+		String jpql = "Select a From Actividad a where (a.duenio.id=?1) and a.fechaInicio Between ?2 AND ?3";
+		Query query = em.createQuery(jpql); 
+		query.setParameter(1, idUsuario);
+		query.setParameter(2, dia1);
+		query.setParameter(3, dia2);
+		 List<Actividad> resultados = query.getResultList(); 
+		 System.out.println(resultados);
+		 for (Actividad a :resultados) {
+			 System.out.println(a.toString());
+		 }
+		
+	}
 	
-
 	public static List<Calendario> getCalendario(int idUsuario,EntityManager em) {
 		String jpql = "Select c From Calendario c";
 		Query query = em.createQuery(jpql); 
