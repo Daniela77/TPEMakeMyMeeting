@@ -11,6 +11,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import servicios.DAOActividad;
 import servicios.DAOUsuario;
 
 public class Main {
@@ -18,6 +19,14 @@ public class Main {
 public static void main(String[] args) {
 	EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
 	EntityManager manager = emf.createEntityManager();
+	
+	///////////////////////////////////Borra BD///////////////////////////////////////////////
+//	manager.getTransaction().begin();
+//	manager.createQuery("DELETE FROM Usuario").executeUpdate();
+//	manager.createQuery("DELETE FROM Calendario").executeUpdate();
+//	manager.createQuery("DELETE FROM Actividad").executeUpdate();
+//	manager.createQuery("DELETE FROM Sala").executeUpdate();
+//	manager.getTransaction().commit();
 
     manager.getTransaction( ).begin( );
     
@@ -73,25 +82,21 @@ public static void main(String[] args) {
 	
 	System.out.println("Ejercicio c.i:");
 	
-	DAOUsuario.getInfoUsuario(1, manager);
+	DAOUsuario.getInfoUsuario(u1.getId(), manager);
 	
 	System.out.println("Ejercicio c.ii:");
 	
-	DAOUsuario.getActividadDeUsuario(1, fechaA1, manager);
+	DAOUsuario.getActividadDeUsuario(u1.getId(), fechaA1, manager);
 	
 	System.out.println("Ejercicio c.iii:");
 	
 	DAOUsuario.getActividadDeUsuarioRango(u1.getId(), fechaA1,fechaA1, manager);
 	
-	System.out.println("Ejercicio c.iv:");
+//	System.out.println("Ejercicio c.iv:");
+//	
+//	DAOActividad.getActividadesSobrepuestas(u1.getId(), a1.getId(), manager);
 	
-	DAOActividad.getReunionesSuperpuestasu1.getId(u1.getId(), a1, manager);
-	
-	
-	Date dateOverlapS = new GregorianCalendar(2017, Calendar.SEPTEMBER, 19, 00, 00).getTime();
-	Date dateOverlapE = new GregorianCalendar(2017, Calendar.SEPTEMBER, 20, 00, 00).getTime();
-	DAOMeeting.createMeeting("Overlap",dateOverlapS,dateOverlapE, 1, 4, 3, em);
-	DAOMeeting.getOverlapMeetings(3, 40, em);
+
 
 //	String jpql = "SELECT u FROM Usuario u"; 
 //    Query query = manager.createQuery(jpql); 

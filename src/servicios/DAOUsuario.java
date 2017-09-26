@@ -47,7 +47,6 @@ private static DAOUsuario daousuario;
 		String jpql = "Select u From Usuario u where u.id =?1";
 		Query query = em.createQuery(jpql); 
 		query.setParameter(1, idUsuario);
-		query.setParameter(1, idUsuario);
 		Usuario u =(Usuario) query.getSingleResult();
 		System.out.println(u.toString());
 		em.getTransaction().commit();

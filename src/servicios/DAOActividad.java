@@ -47,26 +47,25 @@ public class DAOActividad {
 		for(Actividad  a : resultados) { 
 	        System.out.println(a.toString()); 
 	    }
+	}
 		
 		
-		public static void getReunionesSuperpuestas(int usuario, int actividad, EntityManager em) {
-			String jpql = "Select a From Actividad a join Acticvidad a2 on (a2.id = ?1) where("
-					+ "a.usuario.id=?2 and a.fechaInicio <= a2.fechaInicio and a2.fechaInicio "
-					+ "<= a.fechaFin or a.fechaInicio <= a2,fechaFin and a2.fechainicio <= a.fechaInicio) and a.id != ?1";
+		public static void getActividadesSobrepuestas(int usuario, int actividad, EntityManager em) {
+			// saco lo de las actividades solapadas que estaba en Actividad y lo consulto directamenrte en la bd
+			//((act1i.compareTo(act2f) > 0 )||(act1f.compareTo(act2i) < 0))	y lo adapto a la consulta
+			String jpql = "SELECT a1 FROM Actividad a1 , Actividad a2 "
+					+ "WHERE a.duenio_idUsuario = ?1"
+					+ " AND a1.id != ?2" /// Sean distintas actividades
+					+ " AND a2.id = ?2" /// la a con a2
+					+ " AND (a1.fechaInicio < a2.fechaFin" + " AND a2.fechaInicio < a1.fechaFin"
+					+ " OR a1.fechaInicio <= a2.fechaFin" + " AND a2.fechaInicio <= a1.fechaInicio)";
 			Query query = em.createQuery(jpql); 
-			query.setParameter(1, actividad);
-			query.setParameter(2, usuario);
-			List<Actividad> resultados = query.getResultList(); 
-			for(Actividad  a : resultados) { 
-		        System.out.println(a.toString()); 
-		    }
-		}
+			query.setParameter(1, usuario);
+			query.setParameter(2, actividad);
+			List<Actividad> res = query.getResultList(); 
+			for(Actividad  acti : res) { 
+				System.out.println(acti.toString()); 
+			}
 		
-
-}
-
-
-
-
-
+		}
 }
