@@ -2,6 +2,7 @@ package entidades;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -74,18 +75,27 @@ public class Sala implements Serializable {
 	public void setActividad(Actividad actividad) {
 		this.actividades.add(actividad);
 	}
-	 public boolean hayLugar(Actividad act){
-		 // si hay lugar, lo agrega a la lista de tiempos utilizados
-	        if(!actividades.isEmpty()) { /// si la lista de actividades esta con elementos entra , sino queda el true
-	        	for (int i = 0;i< actividades.size();i++){ /// por cada elemento de la lista de actividades
-	                if(actividades.get(i).compararSuperPosicion(act)) { /// busca alguna superposicion de actividades 
-	                	return  false; /// en caso de encontrarla, queda asignado el false
-	                }
-	            }
-	        }
-	        setActividad(act);
-	        return true; // hay lugar para agregar una actividad a esta sala
-	    }
+	
+	public boolean hayLugar(Date fechaI,Date fechaF) {
+		for(int i=0; i<  actividades.size(); i++) {
+			if (((actividades.get(i).getFechaInicio().compareTo(fechaI)> 0) && (actividades.get(i).getFechaFin().compareTo(fechaF)< 0))  
+			 || (actividades.get(i).getFechaFin().compareTo(fechaI)> 0) && (actividades.get(i).getFechaInicio().compareTo(fechaF)< 0))
+					return false;
+		}
+		 return true;
+	}
+//	 public boolean hayLugar(Actividad act){
+//		 // si hay lugar, lo agrega a la lista de tiempos utilizados
+//	        if(!actividades.isEmpty()) { /// si la lista de actividades esta con elementos entra , sino queda el true
+//	        	for (int i = 0;i< actividades.size();i++){ /// por cada elemento de la lista de actividades
+//	                if(actividades.get(i).compararSuperPosicion(act)) { /// busca alguna superposicion de actividades 
+//	                	return  false; /// en caso de encontrarla, queda asignado el false
+//	                }
+//	            }
+//	        }
+//	        setActividad(act);
+//	        return true; // hay lugar para agregar una actividad a esta sala
+//	    }
 	
 	
 	@Override

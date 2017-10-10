@@ -28,7 +28,7 @@ public class Usuario implements Serializable {
 	private String apellido;
 	@OneToMany(cascade=CascadeType.PERSIST)
 	private List<Calendario> calendarios;
-	@ManyToMany(mappedBy ="pendientes")
+	@ManyToMany(mappedBy ="pendientes", cascade=CascadeType.PERSIST)
 	//(cascade=CascadeType.PERSIST)
 	private List<Actividad> actividadesporaceptar;
 	
@@ -102,24 +102,24 @@ public class Usuario implements Serializable {
 		this.calendarios.add(calendario);
 	}
 
-	 public void setActividadCalendario(Actividad actividad, Calendario calendario) {
-	        if (!horarioUsado(actividad)) {
-	            if (calendario.getDuenio().equals(this)) {
-	            	calendario.setActividad(actividad);
-	            }
-	        }
-	    }
-	
-	  public boolean horarioUsado(Actividad actividad) { 
-			for (int i = 0;i< calendarios.size();i++){
-				List<Actividad> acti = calendarios.get(i).getActividades();
-				for (int j = 0;j< acti.size();j++){
-	                if (acti.get(j).compararSuperPosicion(actividad))
-	                	return true;
-	            }
-	        }
-	        return false;
-	    }
+//	 public void setActividadCalendario(Actividad actividad, Calendario calendario) {
+//	        if (!horarioUsado(actividad)) {
+//	            if (calendario.getDuenio().equals(this)) {
+//	            	calendario.setActividad(actividad);
+//	            }
+//	        }
+//	    }
+//	
+//	  public boolean horarioUsado(Actividad actividad) { 
+//			for (int i = 0;i< calendarios.size();i++){
+//				List<Actividad> acti = calendarios.get(i).getActividades();
+//				for (int j = 0;j< acti.size();j++){
+//	                if (acti.get(j).compararSuperPosicion(actividad))
+//	                	return true;
+//	            }
+//	        }
+//	        return false;
+//	    }
 
 	 /// compartir calendarios y aceptar calendarios de otros
 	  
@@ -159,16 +159,16 @@ public class Usuario implements Serializable {
 	// horaria entre los calendarios del usuario
 	*/
 	
-	public boolean aceptarActividadPendiente(Actividad act) {
-		System.out.println(this.calendarios.size());
-		for (int i = 0;i< this.calendarios.size();i++){
-			if (!this.calendarios.get(i).disponibilidad(act)) {
-				return false;
-			}
-		}
-		act.setInvitado(this);
-		return actividadesporaceptar.remove(act); // tira true si lo remueve
-	}
+//	public boolean aceptarActividadPendiente(Actividad act) {
+//		System.out.println(this.calendarios.size());
+//		for (int i = 0;i< this.calendarios.size();i++){
+//			if (!this.calendarios.get(i).disponibilidad(act)) {
+//				return false;
+//			}
+//		}
+//		act.setInvitado(this);
+//		return actividadesporaceptar.remove(act); // tira true si lo remueve
+//	}
 	
 	
 	/*

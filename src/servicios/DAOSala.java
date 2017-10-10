@@ -19,12 +19,13 @@ public class DAOSala {
 		return daoSala;
 	}
 	
-	public static void crearSala(String nombre, String direccion, EntityManager em) {
+	public static Sala crearSala(String nombre, String direccion, EntityManager em) {
 		// Crea una nueva sala utilizando el nombre y direccion pasados por parametro
 		em.getTransaction( ).begin( );
 		Sala salaA = new Sala(nombre,direccion);
 		em.persist(salaA);
 		em.getTransaction().commit();
+		return salaA;
 	}
 	
 	public static Sala getSala(int id, EntityManager em) {

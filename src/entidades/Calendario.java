@@ -78,19 +78,19 @@ public class Calendario implements Serializable {
 		actividad.setCalendario(this);
 	}
 
-	public boolean disponibilidad(Actividad act) {
-	/// busca en su listado de actividades si hay disponibilidad para agregar una nueva	
-		boolean valor = false;	
-		for (int i = 0;i< this.actividades.size();i++){
-			if (valor == false) {
-				valor = (actividades.get(i).compararSuperPosicion(act));
-			}
-			else{
-				return true;
-			}
-		}
-		return valor;	
-	}
+//	public boolean disponibilidad(Actividad act) {
+//	/// busca en su listado de actividades si hay disponibilidad para agregar una nueva	
+//		boolean valor = false;	
+//		for (int i = 0;i< this.actividades.size();i++){
+//			if (valor == false) {
+//				valor = (actividades.get(i).compararSuperPosicion(act));
+//			}
+//			else{
+//				return true;
+//			}
+//		}
+//		return valor;	
+//	}
 
 
 

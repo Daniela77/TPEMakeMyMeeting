@@ -52,7 +52,8 @@ public class Actividad implements Serializable {
 		this.calendario = c;
 		this.fechaInicio =  fechaInicio;
 		this.fechaFin =  fechaFin;
-		this.setLugar(lugar);
+//		this.setLugar(lugar);
+		this.setLugar(lugar,fechaInicio,fechaFin);
 		this.invitados = new ArrayList<Usuario>();
 		this.pendientes = new ArrayList<Usuario>();
 	}
@@ -67,14 +68,6 @@ public class Actividad implements Serializable {
 //		this.invitados = new ArrayList<Usuario>();
 //		this.pendientes = new ArrayList<Usuario>();
 //	}
-
-
-	@Override
-	public String toString() {
-		return "Actividad [id=" + id + ", nombre=" + nombre + ", duenio=" + duenio + ", fechaInicio=" + fechaInicio
-				+ ", fechaFin=" + fechaFin + ", lugar=" + lugar + ", invitados=" + invitados + ", pendientes="
-				+ pendientes + ", calendario=" + calendario + "]";
-	}
 
 	public Calendario getCalendario() {
 		return calendario;
@@ -138,29 +131,38 @@ public class Actividad implements Serializable {
 		return lugar;
 	}
 
-	public void setLugar(Sala lugar) {
-		if (lugar.hayLugar(this)) {
+//	public void setLugar(Sala lugar) {
+//		if (lugar.hayLugar(this)) {
+//			this.lugar = lugar;
+//		}
+//		// habria que ver como indicar en caso de no poder ponerlo en esa sala 
+//	}
+	
+	public void setLugar(Sala lugar,Date fechaInicio, Date fechaFin) {
+		if (lugar.hayLugar(fechaInicio,fechaFin)) {
 			this.lugar = lugar;
+			this.lugar.setActividad(this);
 		}
-		// habria que ver como indicar en caso de no poder ponerlo en esa sala 
+		//mmdy: habria que ver como indicar en caso de no poder ponerlo en esa sala 
 	}
 
-     //////Comprueba si dos reuniones se superponen en tiempo y lugar
-	public  boolean compararSuperPosicion(Actividad act2){
-		return verificarSiSuperponen(this,act2); // esto esta asi porque eclipse queria ponerme estaticas las variables( verificar luego )
-	}
-	
-    public static boolean verificarSiSuperponen(Actividad act1, Actividad act2) {
-	    // compara las fechas de inicio y fin de las actividades. 
-    	Date act1i = act1.getFechaInicio();
-    	Date act1f = act1.getFechaFin();
-    	Date act2i = act2.getFechaInicio();
-    	Date act2f = act2.getFechaFin();
-        if ((act1i.compareTo(act2f) > 0 )||(act1f.compareTo(act2i) < 0)) {
-        	return false;
-        }
-        return true;
-    }
+
+//     //////Comprueba si dos reuniones se superponen en tiempo y lugar
+//	public  boolean compararSuperPosicion(Actividad act2){
+//		return verificarSiSuperponen(this,act2); // esto esta asi porque eclipse queria ponerme estaticas las variables( verificar luego )
+//	}
+//	
+//    public static boolean verificarSiSuperponen(Actividad act1, Actividad act2) {
+//	    // compara las fechas de inicio y fin de las actividades. 
+//    	Date act1i = act1.getFechaInicio();
+//    	Date act1f = act1.getFechaFin();
+//    	Date act2i = act2.getFechaInicio();
+//    	Date act2f = act2.getFechaFin();
+//        if ((act1i.compareTo(act2f) > 0 )||(act1f.compareTo(act2i) < 0)) {
+//        	return false;
+//        }
+//        return true;
+//    }
 	///////////// listado de pendientes hasta que estos acepten
 	
 	public void setPendientes(List<Usuario> pendientes) {
@@ -223,5 +225,12 @@ public class Actividad implements Serializable {
 	        Actividad act = (Actividad) obj;
 	        return act.id == id && act.fechaInicio.equals(fechaInicio) && act.fechaFin.equals(fechaFin);
 	    }
+	 
+	 @Override
+		public String toString() {
+			return "Actividad [id=" + id + ", nombre=" + nombre + ", duenio=" + duenio + ", fechaInicio=" + fechaInicio
+					+ ", fechaFin=" + fechaFin + ", lugar=" + lugar + ", invitados=" + invitados + ", pendientes="
+					+ pendientes + ", calendario=" + calendario + "]";
+		}
 	
 }

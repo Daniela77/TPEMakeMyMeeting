@@ -19,11 +19,12 @@ private static DAOUsuario daousuario;
 		return daousuario;
 	}
 	
-	public static void crearUsuario(String nombre, String apellido, int usuario ,EntityManager em) {
+	public static Usuario crearUsuario(String nombre, String apellido ,EntityManager em) {
 		em.getTransaction().begin();
 		Usuario nu= new Usuario(nombre,apellido);
 		em.persist(nu);
 		em.getTransaction().commit();
+		return nu;
 	}
 	
 	public static List<Usuario> getUsuarios(EntityManager em) {
@@ -42,18 +43,18 @@ private static DAOUsuario daousuario;
 		return (Usuario) query.getSingleResult();
 	}
 	
-	public static void getInfoUsuario(int idUsuario,EntityManager em) {
+	public static Usuario getInfoUsuario(int idUsuario,EntityManager em) {
 		em.getTransaction().begin();
 		String jpql = "Select u From Usuario u where u.id =?1";
 		Query query = em.createQuery(jpql); 
 		query.setParameter(1, idUsuario);
 		Usuario u =(Usuario) query.getSingleResult();
-		System.out.println(u.toString());
 		em.getTransaction().commit();
+		return u;
 		
 	}
 
-	public static void getActividadDeUsuario(int idUsuario,Date dia, EntityManager em) {
+	public static List<Actividad> getActividadDeUsuario(int idUsuario,Date dia, EntityManager em) {
 		Calendar c = Calendar.getInstance();
 		int year = c.get(Calendar.YEAR);
 		int month = c.get(Calendar.MONTH) + 1;			
@@ -68,11 +69,8 @@ private static DAOUsuario daousuario;
 		query.setParameter(3, month);
 		query.setParameter(4, year);
 		 List<Actividad> resultados = query.getResultList(); 
-		 System.out.println(resultados);
-		 for (Actividad a :resultados) {
-			 System.out.println(a.toString());
-		 }
-		
+
+		return resultados;
 	}
 	
 	
